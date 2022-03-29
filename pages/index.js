@@ -27,13 +27,13 @@ const Index = () => {
 
   if (!user) {
     return (
-      <>
+      <div className="w-full h-screen place-items-center bg-red-500">
         <p>Sorry looks like</p>
         <p>Your not signed in.</p>
         <div>
           <SupaAuth />
         </div>
-      </>
+      </div>
     );
   }
 

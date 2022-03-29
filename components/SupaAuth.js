@@ -6,10 +6,13 @@ export default function SupaAuth() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (type, email, password) => {
+    console.log(type, email, password);
     const { error, user } =
       type === "LOGIN"
-        ? await supabase.auth.signIn(email, password)
-        : await supabase.auth.signUp(email, password);
+        ? (await supabase.auth.signIn(email, password),
+          alert("Signed in Successfully!"))
+        : (await supabase.auth.signUp(email, password),
+          alert("Signed up Successfully!"));
     if (!error && !user) alert("Check your email for the login");
     if (error) alert(error.message);
   };
@@ -29,7 +32,7 @@ export default function SupaAuth() {
   }
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <div>
         <label>Email</label>
         <input
@@ -50,6 +53,7 @@ export default function SupaAuth() {
       </div>
       <div>
         <button
+          type="submit"
           onClick={() => {
             handleSubmit("SIGNUP", email, password);
           }}
@@ -57,6 +61,7 @@ export default function SupaAuth() {
           Sign up
         </button>
         <button
+          type="submit"
           onClick={() => {
             handleSubmit("LOGIN", email, password);
           }}
@@ -84,6 +89,6 @@ export default function SupaAuth() {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
